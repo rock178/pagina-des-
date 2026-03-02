@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Acceso — Equipo de Trabajo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-icon">E</div>
+          <div>
+            <h1 class="logo-title">Portal de Acceso</h1>
+            <p class="logo-subtitle">Gestión de enlaces para tu equipo</p>
+          </div>
+        </div>
+        <div class="header-stats">
+          <div class="stat">
+            <span class="stat-number" id="totalLinks">0</span>
+            <span class="stat-label">Enlaces creados</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" id="activeLinks">0</span>
+            <span class="stat-label">Activos</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Generator Section -->
+      <section class="card generator-card">
+        <div class="card-header">
+          <h2 class="card-title">Generar Enlace de Acceso</h2>
+          <p class="card-description">Crea un enlace único para invitar a un miembro de tu equipo.</p>
+        </div>
+        <form id="linkForm" class="form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="memberName">Nombre del miembro</label>
+              <input type="text" id="memberName" placeholder="Ej: María García" required>
+            </div>
+            <div class="form-group">
+              <label for="memberEmail">Correo electrónico</label>
+              <input type="email" id="memberEmail" placeholder="Ej: maria@empresa.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="memberRole">Rol / Área</label>
+              <select id="memberRole">
+                <option value="miembro">Miembro</option>
+                <option value="administrador">Administrador</option>
+                <option value="editor">Editor</option>
+                <option value="visualizador">Visualizador</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="linkExpiry">Expiración del enlace</label>
+              <select id="linkExpiry">
+                <option value="24h">24 horas</option>
+                <option value="48h">48 horas</option>
+                <option value="7d" selected>7 días</option>
+                <option value="30d">30 días</option>
+                <option value="never">Sin expiración</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <span class="btn-text">Generar Enlace de Acceso</span>
+            <span class="btn-icon">→</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- Generated Link Display (hidden by default) -->
+      <section class="card link-result-card" id="linkResult" style="display: none;">
+        <div class="card-header">
+          <h2 class="card-title success-title">Enlace Generado Exitosamente</h2>
+        </div>
+        <div class="link-display">
+          <div class="link-box">
+            <input type="text" id="generatedLink" readonly>
+            <button class="btn btn-copy" id="copyBtn" onclick="copyLink()">Copiar</button>
+          </div>
+          <div class="link-meta">
+            <span class="link-meta-item" id="linkMemberInfo"></span>
+            <span class="link-meta-item" id="linkRoleInfo"></span>
+            <span class="link-meta-item" id="linkExpiryInfo"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Links Table -->
+      <section class="card table-card">
+        <div class="card-header">
+          <h2 class="card-title">Enlaces Generados</h2>
+          <p class="card-description">Historial de todos los enlaces de acceso creados para tu equipo.</p>
+        </div>
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">~</div>
+          <h3>No hay enlaces generados</h3>
+          <p>Crea tu primer enlace de acceso usando el formulario de arriba.</p>
+        </div>
+        <div class="table-wrapper" id="tableWrapper" style="display: none;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Miembro</th>
+                <th>Rol</th>
+                <th>Enlace</th>
+                <th>Expira</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="linksTableBody">
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Portal de Acceso — Equipo de Trabajo &copy; 2026</p>
+    </footer>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <span id="toastMessage"></span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
